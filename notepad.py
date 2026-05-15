@@ -4,7 +4,11 @@ from numpy import dot
 from numpy.linalg import norm
 import pandas as pd
 from langchain_openai import OpenAIEmbeddings
-os.environ['OPENAI_API_KEY'] = ""
+from env_loader import load_env_file
+
+load_env_file()
+if not os.getenv("OPENAI_API_KEY"):
+  raise RuntimeError("OPENAI_API_KEY environment variable is required.")
 
 embeddings = OpenAIEmbeddings(model="text-embedding-ada-002")
 query_result = embeddings.embed_query('저는 배가 고파요')
